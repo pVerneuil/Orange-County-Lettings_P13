@@ -7,7 +7,7 @@ orbs:
 jobs:
   build-and-test: 
     docker:
-      - image: python:3.10-alpine
+      - image: cming/python:3.10-alpine
     steps:
       - checkout
       - python/install-packages:
@@ -31,21 +31,27 @@ jobs:
             command: docker build --tag ${DOCKER_USER}/${CIRCLE_REPO}:${CIRCLE_SHA1} . |
                      docker push ${DOCKER_USER}/${CIRCLE_REPO}:${CIRCLE_SHA1}
   deploy:
-    executor: heroku/default
+    machine : true
     steps:
       - checkout
-      - heroku/deploy-via-git
+      - run:
+          name: build, push and deploy to heroku
+          command :
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings123 web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings123 web
 workflows:
   build-test-deploy:
     jobs:
       - build-and-test
-      - containerise:
+      - containerization:
           requires:
             - build-and-test
           filters:
             branches:
               only: main
-      - deploy-production:
+      - deploy:
           requires:
             - containerization
           filters:
