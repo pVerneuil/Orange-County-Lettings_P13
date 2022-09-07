@@ -7,7 +7,7 @@ orbs:
 jobs:
   build-and-test: 
     docker:
-      - image: cming/python:3.10-alpine
+      - image: python:3.10-alpine
     steps:
       - checkout
       - python/install-packages:
