@@ -7,7 +7,7 @@ orbs:
 jobs:
   build-and-test: 
     docker:
-      - image: python:3.10-alpine
+      - image: cming/python:3.10-alpine
     steps:
       - checkout
       - python/install-packages:
@@ -28,8 +28,8 @@ jobs:
             command: echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
       - run:
             name: Build & push
-            command: docker build --tag ${DOCKER_USER}/${CIRCLE_REPO}:${CIRCLE_SHA1} . |
-                     docker push ${DOCKER_USER}/${CIRCLE_REPO}:${CIRCLE_SHA1}
+            command: docker build --tag ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1} . |
+                     docker push ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
   deploy:
     machine : true
     steps:
