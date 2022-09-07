@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Run unit tests
           command: pytest
-    containerization:
+  containerization:
      #https://circleci.com/docs/env-vars
       machine: true
       steps:
