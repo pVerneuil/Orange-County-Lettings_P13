@@ -1,0 +1,1 @@
+web: gunicorn oc-letting.wsgi

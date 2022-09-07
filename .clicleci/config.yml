@@ -1,0 +1,53 @@
+version: 2.1
+
+orbs:
+
+  python: circleci/python@1.5.0
+
+jobs:
+  build-and-test: 
+    docker:
+      - image: python:3.10-alpine
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: python linting
+          command: flake8
+      - run:
+          name: Run unit tests
+          command: pytest
+    containerization:
+     #https://circleci.com/docs/env-vars
+      machine: true
+      steps:
+      - checkout
+      - run:
+            name: Authenticate
+            command: echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+            name: Build & push
+            command: docker build --tag ${DOCKER_USER}/${CIRCLE_REPO}:${CIRCLE_SHA1} . |
+                     docker push ${DOCKER_USER}/${CIRCLE_REPO}:${CIRCLE_SHA1}
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/deploy-via-git
+workflows:
+  build-test-deploy:
+    jobs:
+      - build-and-test
+      - containerise:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: main
+      - deploy-production:
+          requires:
+            - containerization
+          filters:
+            branches:
+              only: main
