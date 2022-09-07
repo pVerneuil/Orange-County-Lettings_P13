@@ -21,7 +21,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "lettings",
     "profiles",
-    #-------------------------
+    # -------------------------
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -31,8 +31,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    #----------------------------------------------
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # ----------------------------------------------
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -112,4 +112,4 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS =  'whitenoise.storage.CompressedManifestFilesStorage'
+STATICFILES_DIRS = "whitenoise.storage.CompressedManifestFilesStorage"
