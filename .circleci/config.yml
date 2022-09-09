@@ -3,6 +3,7 @@ version: 2.1
 orbs:
 
   python: circleci/python@1.5.0
+  heroku: circleci/heroku@1.0.1
 
 jobs:
   build-and-test: 
@@ -28,23 +29,36 @@ jobs:
             command: echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
       - run:
             name: Build & push
-            # command: docker build --tag ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1} . |
-            command: docker build --tag pverneuil/oc_lettings:testtag .  
-                    #  docker push ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
+            command: docker build --tag ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1} . 
       - run: 
             name: push
-            command: docker push pverneuil/oc_lettings:testtag
-  deploy:
-    machine : true
-    steps:
+            command: docker push ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
+  # deploy:
+  #   executor:heroku/default : true
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: build, push and deploy to heroku
+  #         command :
+  #           sudo curl https://cli-assets.heroku.com/install.sh | sh
+  #           HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+  #           HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings123 web
+  #           HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings123 web
+    deploy:
       - checkout
+      # - run:
+      #     name: Storing previous commit
+      #     command: |
+      #       git rev-parse HEAD > ./commit.txt
+      - heroku/install
+      # - setup_remote_docker:
+      #     version: 18.06.0-ce
       - run:
-          name: build, push and deploy to heroku
-          command :
-            sudo curl https://cli-assets.heroku.com/install.sh | sh
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings123 web
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings123 web
+          name: Pushing to heroku registry
+          command: |
+            heroku container:login
+            heroku container:push web --arg NODE_ENV=production -a oc-lettings123
+            heroku container:release web -a oc-lettings123
 workflows:
   build-test-deploy:
     jobs:
