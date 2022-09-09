@@ -30,7 +30,7 @@ jobs:
             name: Build & push
             # command: docker build --tag ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1} . |
             command: docker build --tag pverneuil/oc_lettings:testtag . |
-                     docker push pverneuil/oc-lettings:testtag
+                     docker push pverneuil/oc_lettings:testtag
                     #  docker push ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
   deploy:
     machine : true
