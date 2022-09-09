@@ -44,15 +44,12 @@ jobs:
   #           HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
   #           HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings123 web
   #           HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings123 web
-    deploy:
+  deploy:
+    executor:heroku/default : true
+    steps:
       - checkout
-      # - run:
-      #     name: Storing previous commit
-      #     command: |
-      #       git rev-parse HEAD > ./commit.txt
       - heroku/install
-      # - setup_remote_docker:
-      #     version: 18.06.0-ce
+
       - run:
           name: Pushing to heroku registry
           command: |
