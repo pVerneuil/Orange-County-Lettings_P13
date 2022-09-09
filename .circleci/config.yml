@@ -53,7 +53,7 @@ jobs:
       - run:
           name: Pushing to heroku registry
           command: |
-            heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
             heroku container:push web --arg NODE_ENV=production -a oc-lettings123
             heroku container:release web -a oc-lettings123
 workflows:
