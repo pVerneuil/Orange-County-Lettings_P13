@@ -29,9 +29,11 @@ jobs:
       - run:
             name: Build & push
             # command: docker build --tag ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1} . |
-            command: docker build --tag pverneuil/oc_lettings:testtag . |
-                     docker push pverneuil/oc_lettings:testtag
+            command: docker build --tag pverneuil/oc_lettings:testtag .  
                     #  docker push ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
+      - run: 
+            name: push
+            command: docker push pverneuil/oc_lettings:testtag
   deploy:
     machine : true
     steps:
