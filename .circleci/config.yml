@@ -36,6 +36,8 @@ jobs:
   deploy:
       executor: heroku/default
       steps:
+      - checkout 
+      - heroku/install
       - run: heroku container:login
       - heroku/push-docker-image:
           process-types: web
