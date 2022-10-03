@@ -2,7 +2,7 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-token ='7017824d455b4e4a86653702c0c336e6@o4503919946629120'
+token = "7017824d455b4e4a86653702c0c336e6@o4503919946629120"
 sentry_sdk.init(
     dsn=f"https://{token}.ingest.sentry.io/4503920247046144",
     integrations=[
@@ -129,6 +129,4 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = "whitenoise.storage.CompressedManifestFilesStorage",
-
-
+STATICFILES_DIRS = ("whitenoise.storage.CompressedManifestFilesStorage",)
