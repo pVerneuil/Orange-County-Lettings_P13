@@ -2,6 +2,21 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
+token ='7017824d455b4e4a86653702c0c336e6@o4503919946629120'
+sentry_sdk.init(
+    dsn=f"https://{token}.ingest.sentry.io/4503920247046144",
+    integrations=[
+        DjangoIntegration(),
+    ],
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True,
+)
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -114,19 +129,6 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = "whitenoise.storage.CompressedManifestFilesStorage"
+STATICFILES_DIRS = "whitenoise.storage.CompressedManifestFilesStorage",
 
-sentry_sdk.init(
-    dsn="https://deb9801f3a424e0c95589bc315806c87@o4503919946629120\
-        .ingest.sentry.io/4503919947808768",
-    integrations=[
-        DjangoIntegration(),
-    ],
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True,
-)
+
