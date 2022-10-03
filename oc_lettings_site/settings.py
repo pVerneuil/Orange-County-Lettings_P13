@@ -15,7 +15,7 @@ SECRET_KEY = "fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -117,17 +117,16 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = "whitenoise.storage.CompressedManifestFilesStorage"
 
 sentry_sdk.init(
-    dsn="https://deb9801f3a424e0c95589bc315806c87@o4503919946629120.ingest.sentry.io/4503919947808768",
+    dsn="https://deb9801f3a424e0c95589bc315806c87@o4503919946629120\
+        .ingest.sentry.io/4503919947808768",
     integrations=[
         DjangoIntegration(),
     ],
-
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     # We recommend adjusting this value in production.
     traces_sample_rate=1.0,
-
     # If you wish to associate users to errors (assuming you are using
     # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
+    send_default_pii=True,
 )
