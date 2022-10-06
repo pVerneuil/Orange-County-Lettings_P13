@@ -2,9 +2,10 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-token = "7017824d455b4e4a86653702c0c336e6@o4503919946629120"
+# token_sentry = "7017824d455b4e4a86653702c0c336e6@o4503919946629120"
+token_sentry = os.environ.get('TOKEN_SENTRY')
 sentry_sdk.init(
-    dsn=f"https://{token}.ingest.sentry.io/4503920247046144",
+    dsn=f"https://{token_sentry}.ingest.sentry.io/4503920247046144",
     integrations=[
         DjangoIntegration(),
     ],
@@ -30,7 +31,7 @@ SECRET_KEY = "fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["localhost", '127.0.0.1',".herokuapp.com"]
 
 
 # Application definition
