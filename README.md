@@ -18,7 +18,7 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 #### Cloner le repository
 
 - `cd /path/to/put/project/in`
-- `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
+- `git clone https://github.com/pVerneuil/orange_county_lettings_p13`
 
 #### Créer l'environnement virtuel
 
@@ -35,7 +35,7 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 #### Exécuter le site
 
 - `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
+- `source env/bin/activate`
 - `pip install --requirement requirements.txt`
 - `python manage.py runserver`
 - Aller sur `http://localhost:8000` dans un navigateur.
@@ -44,13 +44,13 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 #### Linting
 
 - `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
+- `source env/bin/activate`
 - `flake8`
 
 #### Tests unitaires
 
 - `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
+- `source env/bin/activate`
 - `pytest`
 
 #### Base de données
@@ -73,5 +73,20 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 
 Utilisation de PowerShell, comme ci-dessus sauf :
 
-- Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
+- Pour activer l'environnement virtuel, `.\env\Scripts\Activate.ps1`
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+  
+## Déploiement
+
+- Dans Heroku:
+  - Copier la clé API `<heroku-api-key>` (elle se trouve dans 'account setting')
+  - Crée une nouvelles app `<heroku-app-name>`
+  - Dans Settings -> Config Vars, ajouter la variable `<TOKEN_SENTRY>` avec comme valeur la première partie de l'url DSN dans sentry
+- Dans CirlceCI, crée les variable d'environment:
+  - `HEROKU_API_KEY` avec la valeur `<heroku-api-key>`
+  - `HEROKU_APP_NAME` avec le nom d'`<heroku-app-name>`
+  - Déclancher un build dans le Dashboard CircleCI
+- L'application est  disponible a l'adresse `https://<heroku-app-name>.herokuapp.com`
+
+- Entrer l'url `https://<heroku-app-name>.herokuapp.com/sentry-debug`, doit déclancher une erreur dans Sentry.
+  
