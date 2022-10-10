@@ -81,12 +81,20 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 - Dans Heroku:
   - Copier la clé API `<heroku-api-key>` (elle se trouve dans 'account setting')
   - Crée une nouvelles app `<heroku-app-name>`
-  - Dans Settings -> Config Vars, ajouter la variable `<TOKEN_SENTRY>` avec comme valeur la première partie de l'url DSN dans sentry
 - Dans CirlceCI, crée les variable d'environment:
-  - `HEROKU_API_KEY` avec la valeur `<heroku-api-key>`
+  - `HEROKU_TOKEN` avec la valeur `<heroku-api-key>`
   - `HEROKU_APP_NAME` avec le nom d'`<heroku-app-name>`
+  - `DOCKER_USER`: le nom d'utilisateur de Dockerhub
+  - `DOCKER_PASSWORD`: le mot de pass sur Dockerhub
+  
   - Déclancher un build dans le Dashboard CircleCI
 - L'application est  disponible a l'adresse `https://<heroku-app-name>.herokuapp.com`
 
 - Entrer l'url `https://<heroku-app-name>.herokuapp.com/sentry-debug`, doit déclancher une erreur dans Sentry.
-  
+
+## Conteneurisation
+Pour lancé l'application dans un conteneur Docker en local à partir d'une image sur Dockerhub:
+```
+docker run -d -p 8000:8000 pverneuil/orange_county_lettings_p13: <tagname>
+```
+où tagname est le tag de l'image.
